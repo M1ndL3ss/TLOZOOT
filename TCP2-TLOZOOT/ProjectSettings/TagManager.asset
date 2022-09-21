@@ -8,18 +8,25 @@ TagManager:
   - Enemy
   - Ground
   - LockOnTarget
+  - Climb
+  - Text
+  - StartingPosition
+  - doNotRepeat
+  - Water
+  - Puzzle
+  - LIfeCounter
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PostProcessing
   - Water
   - UI
   - Climb
   - Ground
   - Enemy
   - 
-  - 
+  - Water
   - 
   - 
   - 

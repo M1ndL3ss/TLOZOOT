@@ -4,27 +4,25 @@ using UnityEngine;
 
 public class DekuBaba_scpt : MonoBehaviour
 {
-    public Player_Move player_Move;
+    public Player_Scp instaciaPlayer;
     public Animator animator;
     public Combat combat;
+    public GameObject gameObject;
 
     public bool canAttack;
     public float atkCooldown;
 
     private float distanceFromPlayer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+    private void Awake() {
+        this.instaciaPlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<Player_Scp>();       
     }
 
     // Update is called once per frame
     void Update()
     {
-        distanceFromPlayer = PlayerDistance();
-        Behaviour(distanceFromPlayer);
-
+        Behaviour(this.instaciaPlayer.DistanceFromPlayer(this.transform.position));
+        
         if(!isAttacking()){
             LookAtPlayer();
         }
@@ -33,23 +31,23 @@ public class DekuBaba_scpt : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-    }    
+    }
 
     void LookAtPlayer(){
-        this.transform.LookAt(player_Move.transform);
+        this.transform.LookAt(instaciaPlayer.transform);
         this.transform.rotation = new Quaternion(0,this.transform.rotation.y,0,this.transform.rotation.w);
     }
 
     float PlayerDistance(){
-        return Vector3.Distance(this.transform.position, player_Move.transform.position);
+        return Vector3.Distance(this.transform.position, instaciaPlayer.transform.position);
     }
 
     void Behaviour(float distance){
-        if(distance < 10){
+        if(distance < 15){
             this.animator.SetBool("isShown", true);
         }else this.animator.SetBool("isShown", false);
 
-        if(distance < 3 && canAttack){
+        if(distance < 7.5f && canAttack){
             Attack();
         }
     }
@@ -61,7 +59,7 @@ public class DekuBaba_scpt : MonoBehaviour
     }
 
     bool isAttacking(){
-        if (this.animator.GetCurrentAnimatorStateInfo(0).IsName("DekuBaba_Attack"))
+        if (this.animator.GetBool("Attack"))
         {
             return true;
         }
